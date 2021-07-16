@@ -5,3 +5,5 @@
 !main.c
 !pet_prior_queue.c
 !pet_prior_queue.h
+!linked_list_disease.c
+!linked_list_disease.h
