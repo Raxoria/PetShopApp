@@ -2,6 +2,7 @@
 #define pet_prior_queue.h
 
 #include "linked_list_disease.h"
+#include <stdbool.h>
 
 typedef struct NodeQueue* address_queue;
 
@@ -24,5 +25,44 @@ typedef struct {
     address_queue Front;
     address_queue Rear;
 } Queue;
+
+/*
+* @description  : Mengembalikan nilai true jika Q kosong
+*/
+bool IsQueueEmpty(Queue Q);
+
+/*
+* @description  : Mengirimkan address hasil alokasi satu node, return NULL jika alokasi gagal
+*/
+address_queue AllocNewPatientNode(infotype data);
+
+/*
+* @initialState : node terdefinisi
+* @finalState   : node dibebaskan dan dikembalikan ke sistem
+*/
+void DeallocPatientNode(address_queue node);
+
+/*
+* @initialState : Q sembarang
+* @finalState   : Terbentuk Q kosong, Q=>Front = NULL dan Q->Rear == NULL
+*/
+void CreateNewQueue(Queue *Q);
+
+/*
+* @initialState : Q mungkin kosong
+* @finalState   : Node baru teralokasi dan ditambahkan ke Q di posisi yang sesuai dengan urutan prioritasnya
+*/
+void EnqueueNewPatient(Queue *Q, infotype data);
+
+/*
+* @initialState : Q mungkin kosong
+* @finalState   : Q->Front menunjuk ke antrian selanjutnya atau menjadi NILL, Q->Front sebelumya di Dealokasi
+*/
+void DequeuePatient(Queue *Q);
+
+/*
+* description  : Mencetak data data di dalam antrian ke layar
+*/
+void PrintQueue(Queue Q);
 
 #endif // pet_prior_queue
