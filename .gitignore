@@ -1,2 +1,7 @@
+#Ignore Everything
+*
 
-gitignore
+#But not these
+!main.c
+!pet_prior_queue.c
+!pet_prior_queue.h
