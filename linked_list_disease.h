@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 
-extern const *disease_string[];
+extern const char* disease_string[];
 
 enum disease {
     KULIT,
@@ -70,6 +70,6 @@ void InsertNewDiseaseAtStart(LinkedList_Disease *List, infotype_disease data);
 * @initialState : List mungkin kosong
 * @finalState   : Node baru ditambahkan di akhir List
 */
-void InsertNewDiseaseAtEnd(infotype_disease data);
+void InsertNewDiseaseAtEnd(LinkedList_Disease *List, infotype_disease data);
 
 #endif // linked_list_disease
