@@ -6,11 +6,6 @@
 
 typedef struct NodeQueue* address_queue;
 
-typedef struct NodeQueue {
-    infotype data;
-    address_queue next;
-}NodeQueue;
-
 typedef struct {
     char* nama;
     int waktu_datang;
@@ -20,6 +15,11 @@ typedef struct {
     int priority;
     LinkedList_Disease penyakit;
 } infotype;
+
+typedef struct NodeQueue {
+    infotype data;
+    address_queue next;
+}NodeQueue;
 
 typedef struct {
     address_queue Front;
