@@ -54,6 +54,10 @@ void CreateNewQueue(Queue *Q);
 */
 void EnqueueNewPatient(Queue *Q, infotype data);
 
+void EnqueueAtEnd(Queue *Q, address_queue newNode);
+
+void EnqueueWithPriority(Queue *Q, address_queue newNode);
+
 /*
 * @initialState : Q mungkin kosong
 * @finalState   : Q->Front menunjuk ke antrian selanjutnya atau menjadi NILL, Q->Front sebelumya di Dealokasi
