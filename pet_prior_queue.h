@@ -6,11 +6,6 @@
 
 typedef struct NodeQueue* address_queue;
 
-typedef struct NodeQueue {
-    infotype data;
-    address_queue next;
-}NodeQueue;
-
 typedef struct {
     char* nama;
     int waktu_datang;
@@ -20,6 +15,11 @@ typedef struct {
     int priority;
     LinkedList_Disease penyakit;
 } infotype;
+
+typedef struct NodeQueue {
+    infotype data;
+    address_queue next;
+}NodeQueue;
 
 typedef struct {
     address_queue Front;
@@ -53,6 +53,10 @@ void CreateNewQueue(Queue *Q);
 * @finalState   : Node baru teralokasi dan ditambahkan ke Q di posisi yang sesuai dengan urutan prioritasnya
 */
 void EnqueueNewPatient(Queue *Q, infotype data);
+
+void EnqueueAtEnd(Queue *Q, address_queue newNode);
+
+void EnqueueWithPriority(Queue *Q, address_queue newNode);
 
 /*
 * @initialState : Q mungkin kosong
