@@ -21,7 +21,7 @@ void registrasi(Queue *Q){
 	//cara masukin enum, data penyakitnya gimana?
 	infotype data;
 	char buffer[30] = {};
-	int i=0,total,pilihan;
+	int i=0,total;
 	
 	printf("==================== ROC'S VETERINARY CLINIC ====================\n");
     printf("||                     [NEW REGISTRARION]                      ||\n");
@@ -45,10 +45,12 @@ void registrasi(Queue *Q){
 void nextReg(infotype *data, int total){
 	LinkedList_Disease daftarPenyakit;
 	infotype_disease penyakit;
+	int pilihan,i;
 	
 	CreateNewDiseaseList(&daftarPenyakit);
 	
 	do{
+		system("cls");
 		system("color F0"); 
 		printf("==================== ROC'S VETERINARY CLINIC ====================\n");
 		printf("||                     [TYPE OF DISEASES]                      ||\n");
@@ -101,6 +103,29 @@ void list(Queue Q){
 	PrintQueue(Q);
 }
 
+void call(Queue Q){
+	address_queue antrian,next;
+	
+	antrian = Q.Front;
+	next = antrian->next;
+	
+	system("color F0"); 
+		printf("==================== ROC'S VETERINARY CLINIC ====================\n");
+		printf("||                        [CALL THE CAT]                       ||\n");
+    	printf("|| Choose the diseases!                                        ||\n");
+    	printf("|| Name                 : %-20s                 ||\n",Q.Front->data.nama);
+    	printf("|| Start of Service     : %-13d                        ||\n",Q.Front->data.waktu_estimasi_mulai);
+    	printf("|| End of Service       : %-14d                       ||\n",Q.Front->data.waktu_selesai);
+    	printf("||                                                             ||\n"); 
+    	if(next != NULL){
+		printf("|| Next Cat                                                    ||\n");
+    	printf("|| Name                 : %-20s                 ||\n", next->data.nama);
+		printf("|| Start of Service     : %-13d                        ||\n", next->data.waktu_estimasi_mulai);
+    	printf("||                                                             ||\n");}
+		printf("|| Enter to Main Menu                                          ||\n");  
+		printf("=================================================================\n");
+}
+
 int main()
 {
 	system("cls");
@@ -128,7 +153,6 @@ int main()
 			system("cls");
 			system("color F0"); 
 			registrasi(&antrian);
-			getch();
 			break;
 		case 2 :
 			system("cls");
@@ -139,6 +163,8 @@ int main()
 		case 3 :
 			system("cls");
 			system("color F0"); 
+			call (antrian);
+			getch();
 			break;
 		case 4 :
 			break;
