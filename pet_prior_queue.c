@@ -113,7 +113,7 @@ void EnqueueWithPriority(Queue *Q, address_queue newNode){
 void DequeuePatient(Queue *Q){
 	address_queue P;
 	
-	if(IsQueueEmpty){
+	if(IsQueueEmpty(*Q){
 		printf("Queue is empty!\n");
 	}
 	else{
@@ -131,7 +131,7 @@ void PrintQueue(Queue Q) {
     address_queue current = Q.Front;
     infotype temp = current->data;
     
-    if(IsQueueEmpty){
+    if(IsQueueEmpty(*Q)){
     	printf("Queue is empty!\n");
     	return;
 	}
