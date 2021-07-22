@@ -43,6 +43,8 @@ void registrasi(Queue *Q){
 }
 
 void nextReg(infotype *data, int total){
+	//kalau salah mending gimana?
+	//1. Kasih peringatan klo salah masukin hrus dri awal lgi
 	LinkedList_Disease daftarPenyakit;
 	infotype_disease penyakit;
 	int pilihan,i;
@@ -90,17 +92,23 @@ void nextReg(infotype *data, int total){
 		default :
 			//SetConsoleTextAttribute(GetStdHandle (STD_OUTPUT_HANDLE),12); 
 			system("color F4");
-			gotoxy(12,21);printf("Please choose the option on the menu!");getch();
+			gotoxy(12,15);printf("Please choose the option on the menu!");getch();
 	        system("cls");
+	        nextReg(data, total);
 			break;
 		} InsertNewDiseaseAtEnd(&daftarPenyakit, penyakit);
 		i++;		
 	}while(i != total);
+	data->penyakit = daftarPenyakit;
 }
 
 void list(Queue Q){
 	system("color F0"); 
+	printf("==================== ROC'S VETERINARY CLINIC ====================\n");
+	printf("||                       [LIST OF QUEUE]                       ||\n");
 	PrintQueue(Q);
+	printf("|| Enter to Main Menu                                          ||\n");  
+	printf("=================================================================\n");
 }
 
 void call(Queue Q){
@@ -171,7 +179,7 @@ int main()
 		default :
 			//SetConsoleTextAttribute(GetStdHandle (STD_OUTPUT_HANDLE),12); 
 			system("color F4");
-			gotoxy(24,9);printf("Please choose the option on the menu!");getch();
+			gotoxy(15,9);printf("Please choose the option on the menu!");getch();
 			break;
 		}
 	}while(pilihan != 4);
