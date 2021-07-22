@@ -136,18 +136,20 @@ void DequeuePatient(Queue *Q){
 * description  : Mencetak data data di dalam antrian ke layar
 */
 void PrintQueue(Queue Q) {
-
+    address_queue current = Q.Front;
+    
     if(IsQueueEmpty(Q)){
-    	printf("Queue is empty!\n");
-    	return;
-	}
-
-	address_queue current = Q.Front;
-    infotype temp = current->data;
-
-    printf("| Nama | Prioritas | Waktu Kedatangan | Estimasi Mulai | Waktu Pelayanan | Waktu Selesai |\n");
-    while(current != NULL) {
-        printf("| %-20s | %-9d | %-16d | %-14d | %-15d | %-13d |\n", current->data.nama, current->data.priority, current->data.waktu_datang, current->data.waktu_estimasi_mulai, current->data.waktu_pelayaan, current->data.waktu_selesai);
-		current = current->next;
+        printf("Queue is empty!\n");
+        return;
     }
-}
+    
+    while(current != NULL) {
+        infotype temp = current->data;
+        printf("Time of Arrival\t\t: %-16d\n", temp->waktu_datang);
+        printf("Name\t\t\t: %-20s\n", temp->nama);
+        printf("Time of Service\t\t: %-15d\n", temp->waktu_pelayaan);
+        printf("Start of Service\t: %-14d\n", temp->waktu_estimasi_mulai);
+        printf("End of Service\t\t: %-13d\n", temp->waktu_selesai);
+        current = current->next;
+    }
+} 
