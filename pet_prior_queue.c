@@ -121,11 +121,9 @@ void DequeuePatient(Queue *Q){
         P = Q->Front;
 
         if(P == Q->Rear){
-            printf("1");
             Q->Front = NULL;
             Q->Rear = NULL;
         } else {
-            printf("2");
             Q->Front = P->next;
         }
 
