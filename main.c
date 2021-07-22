@@ -85,6 +85,8 @@ void determinePriorityAndServiceTime(infotype *data, address_linked_list first){
 }
 
 void nextReg(infotype *data, int total){
+	//kalau salah mending gimana?
+	//1. Kasih peringatan klo salah masukin hrus dri awal lgi
 	LinkedList_Disease daftarPenyakit;
 	infotype_disease penyakit;
 	int pilihan,i;
@@ -138,32 +140,34 @@ void nextReg(infotype *data, int total){
                 system("cls");
 			break;
 		}
-
 		InsertNewDiseaseAtEnd(&daftarPenyakit, penyakit);
 		i++;
 	}while(i != total);
-
 	data->penyakit = daftarPenyakit;
 }
 
 void list(Queue Q){
 	system("color F0");
+	printf("==================== ROC'S VETERINARY CLINIC ====================\n");
+	printf("||                       [LIST OF QUEUE]                       ||\n");
 	PrintQueue(Q);
+	printf("|| Enter to Main Menu                                          ||\n");
+	printf("=================================================================\n");
 }
 
-void call(Queue Q){
+void call(Queue *Q){
 	address_queue antrian,next;
 
-	antrian = Q.Front;
+	antrian = Q->Front;
 	next = antrian->next;
 
 	system("color F0");
     printf("==================== ROC'S VETERINARY CLINIC ====================\n");
     printf("||                        [CALL THE CAT]                       ||\n");
     printf("|| Choose the diseases!                                        ||\n");
-    printf("|| Name                 : %-20s                 ||\n",Q.Front->data.nama);
-    printf("|| Start of Service     : %-13d                        ||\n",Q.Front->data.waktu_estimasi_mulai);
-    printf("|| End of Service       : %-14d                       ||\n",Q.Front->data.waktu_selesai);
+    printf("|| Name                 : %-20s                 ||\n",Q->Front->data.nama);
+    printf("|| Start of Service     : %-13d                        ||\n",Q->Front->data.waktu_estimasi_mulai);
+    printf("|| End of Service       : %-14d                       ||\n",Q->Front->data.waktu_selesai);
     printf("||                                                             ||\n");
     if(next != NULL){
         printf("|| Next Cat                                                    ||\n");
@@ -173,6 +177,8 @@ void call(Queue Q){
     }
     printf("|| Enter to Main Menu                                          ||\n");
     printf("=================================================================\n");
+
+    DequeuePatient(Q);
 }
 
 int main()
@@ -212,7 +218,7 @@ int main()
 		case 3 :
 			system("cls");
 			system("color F0");
-			call (antrian);
+			call (&antrian);
 			getch();
 			break;
 		case 4 :
@@ -220,7 +226,7 @@ int main()
 		default :
 			//SetConsoleTextAttribute(GetStdHandle (STD_OUTPUT_HANDLE),12);
 			system("color F4");
-			gotoxy(24,9);printf("Please choose the option on the menu!");getch();
+			gotoxy(15,9);printf("Please choose the option on the menu!");getch();
 			break;
 		}
 	}while(pilihan != 4);
