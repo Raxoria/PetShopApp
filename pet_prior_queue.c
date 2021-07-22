@@ -112,25 +112,15 @@ void EnqueueWithPriority(Queue *Q, address_queue newNode){
 */
 void DequeuePatient(Queue *Q){
 	address_queue P;
-
-	if(IsQueueEmpty(*Q)){
+	
+	if(IsQueueEmpty){
 		printf("Queue is empty!\n");
 	}
-
 	else{
-        P = Q->Front;
-
-        if(P == Q->Rear){
-            printf("1");
-            Q->Front = NULL;
-            Q->Rear = NULL;
-        } else {
-            printf("2");
-            Q->Front = P->next;
-        }
-
-        P->next = NULL;
-        DeallocPatientNode(P);
+			P = Q->Front;
+			Q->Front = P->next;
+			P->next = NULL;
+			Dealokasi(&P);
 	}
 }
 
@@ -138,14 +128,13 @@ void DequeuePatient(Queue *Q){
 * description  : Mencetak data data di dalam antrian ke layar
 */
 void PrintQueue(Queue Q) {
-
-    if(IsQueueEmpty(Q)){
+    address_queue current = Q.Front;
+    infotype temp = current->data;
+    
+    if(IsQueueEmpty){
     	printf("Queue is empty!\n");
     	return;
 	}
-
-	address_queue current = Q.Front;
-    infotype temp = current->data;
 
     printf("| Nama | Prioritas | Waktu Kedatangan | Estimasi Mulai | Waktu Pelayanan | Waktu Selesai |\n");
     while(current != NULL) {
