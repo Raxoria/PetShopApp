@@ -14,6 +14,11 @@ const char* disease_string[] = {
     "Terkena Virus"
 };
 
+const int SEVERE = 3;
+const int MODERATE = 2;
+const int MILD = 1;
+
+
 /*
 * @description  : Mengembalikan nilai true jika List kosong
 */

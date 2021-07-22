@@ -4,6 +4,9 @@
 #include <stdbool.h>
 
 extern const char* disease_string[];
+extern const int SEVERE;
+extern const int MODERATE;
+extern const int MILD;
 
 enum disease {
     KULIT,
