@@ -120,16 +120,19 @@ void nextReg(infotype *data, int total){
             case 2 :
             case 3 :
                 penyakit.severity = MILD;
-                break;
+                i++;
+				break;
             case 4 :
             case 5 :
             case 6 :
                 penyakit.severity = MODERATE;
-                break;
+                i++;
+				break;
             case 7 :
             case 8 :
             case 9 :
                 penyakit.severity = SEVERE;
+                i++;
                 break;
             default :
                 //SetConsoleTextAttribute(GetStdHandle (STD_OUTPUT_HANDLE),12);
@@ -141,7 +144,6 @@ void nextReg(infotype *data, int total){
 			break;
 		}
 		InsertNewDiseaseAtEnd(&daftarPenyakit, penyakit);
-		i++;
 	}while(i != total);
 	data->penyakit = daftarPenyakit;
 }
@@ -157,28 +159,63 @@ void list(Queue Q){
 
 void call(Queue *Q){
 	address_queue antrian,next;
+	int pil;
 
-	antrian = Q->Front;
-	next = antrian->next;
+	if(IsQueueEmpty(*Q)){
+		do{
+		system("color F0");
+		printf("==================== ROC'S VETERINARY CLINIC ====================\n");
+    	printf("||                        [CALL THE CAT]                       ||\n");
+    	printf("||                                                             ||\n");
+    	printf("|| Sorry there isn't a Queue :(                                ||\n");
+    	printf("|| Please make a Registration first!                           ||\n");
+    	printf("||                                                             ||\n");
+    	printf("|| Would you like to Register?                                 ||\n");
+    	printf("|| 1. Yes [Make a Registration]                                ||\n");
+    	printf("|| 2. No  [Back to Menu]                                       ||\n");
+    	printf("=================================================================\n");
+    	gotoxy(31,6);scanf("%d", &pil);fflush(stdin);
+    	switch(pil){
+    		case 1:
+    			system("cls");
+				system("color F0");
+				registrasi(&antrian);
+    			break;
+    		case 2:
+    			main();
+    			break;
+    		default :
+    			system("color F4");
+				gotoxy(15,10);printf("Please choose the option on the menu!");getch();
+				system("cls");
+				break;
+    		}
+		}while(pil != "1" || pil != "2");
+	}
+	
+	
+	else{
+		antrian = Q->Front;
+		next = antrian->next;
 
-	system("color F0");
-    printf("==================== ROC'S VETERINARY CLINIC ====================\n");
-    printf("||                        [CALL THE CAT]                       ||\n");
-    printf("|| Choose the diseases!                                        ||\n");
-    printf("|| Name                 : %-20s                 ||\n",Q->Front->data.nama);
-    printf("|| Start of Service     : %-13d                        ||\n",Q->Front->data.waktu_estimasi_mulai);
-    printf("|| End of Service       : %-14d                       ||\n",Q->Front->data.waktu_selesai);
-    printf("||                                                             ||\n");
-    if(next != NULL){
-        printf("|| Next Cat                                                    ||\n");
-        printf("|| Name                 : %-20s                 ||\n", next->data.nama);
-        printf("|| Start of Service     : %-13d                        ||\n", next->data.waktu_estimasi_mulai);
-        printf("||                                                             ||\n");
-    }
-    printf("|| Enter to Main Menu                                          ||\n");
-    printf("=================================================================\n");
-
+		system("color F0");
+	    printf("==================== ROC'S VETERINARY CLINIC ====================\n");
+    	printf("||                        [CALL THE CAT]                       ||\n");
+	    printf("||                                                             ||\n");
+    	printf("|| Name                 : %-20s                 ||\n",Q->Front->data.nama);
+	    printf("|| Start of Service     : %-13d                        ||\n",Q->Front->data.waktu_estimasi_mulai);
+   		printf("|| End of Service       : %-14d                       ||\n",Q->Front->data.waktu_selesai);
+    	printf("||                                                             ||\n");
+    	if(next != NULL){
+        	printf("|| Next Cat                                                    ||\n");
+        	printf("|| Name                 : %-20s                 ||\n", next->data.nama);
+        	printf("|| Start of Service     : %-13d                        ||\n", next->data.waktu_estimasi_mulai);
+        	printf("||                                                             ||\n");
+    	}
+    	printf("|| Enter to Main Menu                                          ||\n");
+    	printf("=================================================================\n");
     DequeuePatient(Q);
+	}
 }
 
 int main()
