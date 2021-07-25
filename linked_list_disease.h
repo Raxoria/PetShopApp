@@ -75,4 +75,6 @@ void InsertNewDiseaseAtStart(LinkedList_Disease *List, infotype_disease data);
 */
 void InsertNewDiseaseAtEnd(LinkedList_Disease *List, infotype_disease data);
 
+void DestructDiseaseList(address_linked_list first);
+
 #endif // linked_list_disease
