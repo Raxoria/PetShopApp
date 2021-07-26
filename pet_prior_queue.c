@@ -140,26 +140,31 @@ void DequeuePatient(Queue *Q){
 */
 void PrintQueue(Queue Q) {
     address_queue current = Q.Front;
-
+    
     if(IsQueueEmpty(Q)){
-        printf("Queue is empty!\n");
-        return;
-    }
-
+    	printf("Queue is empty!\n");
+    	return;
+	}
+	
     while(current != NULL) {
-        infotype temp = current->data;
-        printf("Time of Arrival\t\t: %-16d\n", temp.waktu_datang);
-        printf("Name\t\t\t: %-20s\n", temp.nama);
-        printf("Time of Service\t\t: %-15d\n", temp.waktu_pelayaan);
-        printf("Start of Service\t: %-14d\n", temp.waktu_estimasi_mulai);
-        printf("End of Service\t\t: %-13d\n", temp.waktu_selesai);
-
-        address_linked_list curr_link = temp.penyakit.First;
-        while(curr_link != NULL) {
-            printf("%s\n", disease_string[curr_link->data_disease.disease_name]);
-            curr_link = curr_link->next;
-        }
-
-        current = current->next;
-    }
+    	infotype temp = current->data;
+    	address_linked_list curr_link = temp.penyakit.First;
+    	
+    	printf("\n");
+	printf("   Time of Arrival\t: %-16d\n", temp.waktu_datang);
+	printf("   Name\t\t\t: %-20s\n", temp.nama);
+	printf("   \xDA\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC2\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xBF\n");
+	printf("   \xB3    Category Disease    \xB3                       Disease                         \xB3\n");
+	printf("   \xC3\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC5\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xB4\n");
+    	while(curr_link != NULL) {
+		printf("   \xB3           %-5d        \xB3 %-54s\xB3\n", curr_link->data_disease.severity, disease_string[curr_link->data_disease.disease_name]);
+		curr_link = curr_link->next;
+    	}
+    	printf("   \xC0\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC1\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xD9\n");
+    	printf("   Time of Service\t: %-15d\n", temp.waktu_pelayaan);
+	printf("   Start of Service\t: %-14d\n", temp.waktu_estimasi_mulai);
+	printf("   End of Service\t: %-13d\n", temp.waktu_selesai);
+	current = current->next;
+	}
+     printf("\n");
 }
