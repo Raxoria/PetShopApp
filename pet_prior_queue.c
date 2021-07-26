@@ -140,26 +140,24 @@ void DequeuePatient(Queue *Q){
 */
 void PrintQueue(Queue Q) {
     address_queue current = Q.Front;
-
+    
     if(IsQueueEmpty(Q)){
-        printf("Queue is empty!\n");
+    	printf("||                                                             ||\n");
+        printf("|| Queue is empty!                                             ||\n");
+        printf("||                                                             ||\n");
         return;
     }
-
+    
     while(current != NULL) {
         infotype temp = current->data;
-        printf("Time of Arrival\t\t: %-16d\n", temp.waktu_datang);
-        printf("Name\t\t\t: %-20s\n", temp.nama);
-        printf("Time of Service\t\t: %-15d\n", temp.waktu_pelayaan);
-        printf("Start of Service\t: %-14d\n", temp.waktu_estimasi_mulai);
-        printf("End of Service\t\t: %-13d\n", temp.waktu_selesai);
-
-        address_linked_list curr_link = temp.penyakit.First;
-        while(curr_link != NULL) {
-            printf("%s\n", disease_string[curr_link->data_disease.disease_name]);
-            curr_link = curr_link->next;
-        }
-
+        printf("||                                                             ||\n");
+        printf("|| Time of Arrival	: %-16d                     ||\n", temp.waktu_datang);
+        printf("|| Name			: %-20s                 ||\n", temp.nama);
+        printf("|| Time of Service	: %-15d                      ||\n", temp.waktu_pelayaan);
+        printf("|| Start of Service	: %-14d                       ||\n", temp.waktu_estimasi_mulai);
+        printf("|| End of Service	: %-13d    	               ||\n", temp.waktu_selesai);
+        printf("||                                                             ||\n");
         current = current->next;
     }
 }
+
