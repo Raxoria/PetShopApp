@@ -61,7 +61,7 @@ void determinePriorityAndServiceTime(infotype *data, address_linked_list first){
             totalTime+=30;
         } else if(severity == SEVERE) {
             severeCount++;
-            totalTime+=30;
+            totalTime+=45;
         }
 
         first = first->next;
@@ -149,12 +149,39 @@ void nextReg(infotype *data, int total){
 }
 
 void list(Queue Q){
+	int pil;
 	system("color F0");
-	printf("==================== ROC'S VETERINARY CLINIC ====================\n");
-	printf("||                       [LIST OF QUEUE]                       ||\n");
-	PrintQueue(Q);
-	printf("|| Enter to Main Menu                                          ||\n");
-	printf("=================================================================\n");
+	printf("=============================== ROC'S VETERINARY CLINIC ===============================\n");
+	printf("||                                  [LIST OF QUEUE]                                  ||\n");
+	if(IsQueueEmpty(Q)){
+		do{
+		system("color F0");
+    	printf("||                                                                                   ||\n");
+        printf("|| Sorry there isn't a Queue :(                                                      ||\n");
+    	printf("|| Please make a Registration first!                                                 ||\n");
+    	printf("||                                                                                   ||\n");
+    	printf("|| Would you like to Register?                                                       ||\n");
+    	printf("|| 1. Yes [Make a Registration]                                                      ||\n");
+    	printf("|| 2. No  [Back to Menu]                                                             ||\n");
+		printf("=======================================================================================\n");
+    	gotoxy(31,6);scanf("%d", &pil);fflush(stdin);
+    	switch(pil){
+    		case 1:
+    			system("cls");
+				system("color F0");
+				registrasi(&antrian);
+    			break;
+    		case 2:
+    			main();
+    			break;
+    		default :
+    			system("color F4");
+				gotoxy(15,10);printf("Please choose the option on the menu!");getch();
+				system("cls");
+				break;
+    		}
+		}while(pil != "1" || pil != "2");
+	}else{PrintQueue(Q);}
 }
 
 void call(Queue *Q){
