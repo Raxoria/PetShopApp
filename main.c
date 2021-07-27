@@ -5,7 +5,7 @@
 #include <string.h>
 #include <conio.h>
 #include <windows.h>
-#include<time.h>
+#include <time.h>
 
 Queue antrian;
 /* int bg, fg, delay, panjang;
@@ -44,8 +44,6 @@ void gotoxy(int x, int y) {
 }
 
 void registrasi(Queue *Q){
-	//catatan reg : mau dibikin 2 modul? atau gimana? biar gotoxynya jalan. Trus klo misalnya total dijadiin struct gimana?
-	//cara masukin enum, data penyakitnya gimana?
 	infotype data;
 	char buffer[30] = {};
 	int i=0,total;
@@ -113,8 +111,6 @@ void determinePriorityAndServiceTime(infotype *data, address_linked_list first){
 }
 
 void nextReg(infotype *data, int total){
-	//kalau salah mending gimana?
-	//1. Kasih peringatan klo salah masukin hrus dri awal lgi
 	LinkedList_Disease daftarPenyakit;
 	infotype_disease penyakit;
 	int pilihan,i;
@@ -234,7 +230,7 @@ void call(Queue *Q){
     		case 1:
     			system("cls");
 				system("color F0");
-				registrasi(&antrian);
+				registrasi(Q);
     			break;
     		case 2:
     			main();
