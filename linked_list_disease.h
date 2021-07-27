@@ -77,4 +77,6 @@ void InsertNewDiseaseAtEnd(LinkedList_Disease *List, infotype_disease data);
 
 void DestructDiseaseList(address_linked_list first);
 
+bool CheckIfDiseaseAlreadyExist(address_linked_list first, enum disease data);
+
 #endif // linked_list_disease

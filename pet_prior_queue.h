@@ -69,4 +69,6 @@ void DequeuePatient(Queue *Q);
 */
 void PrintQueue(Queue Q);
 
+char* GetSeverityString(int severity);
+
 #endif // pet_prior_queue
