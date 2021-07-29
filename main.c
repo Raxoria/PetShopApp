@@ -3,9 +3,36 @@
 #include "linked_list_disease.h"
 #include "pet_prior_queue.h"
 #include <string.h>
+#include <conio.h>
 #include <windows.h>
+#include <time.h>
 
 Queue antrian;
+/* int bg, fg, delay, panjang;
+int simbol[20] = {2,3,4,5,6,14,16,22,35,36,62,64,158,174,175,176,177,178,219};
+
+void loading(int bg, int fg, int panjang, int delay, int simbol[20])
+{
+ int k, l;
+	system("color F0");
+   for (k=0; k<=panjang; k++)
+   {
+      //system("cls");  //digunakan untuk membersihkan layar pada compiler C, hampir sama dengan fungsi clrscr()
+      gotoxy(55,1);printf("\n\tLOADING (PLEASE WAIT)\n\t");
+      kecepatan(0.001);
+	  for (l=0; l<k; l++)
+       printf("%c", simbol[fg]);
+      for (l=0; l<panjang-1; l++)
+       printf("%c", simbol[bg]);
+      Sleep(delay);
+   }
+}
+
+void kecepatan(float seconds){
+	clock_t endwait;
+	endwait=clock()+seconds*CLOCKS_PER_SEC;
+	while(clock()<endwait){};
+}*/
 
 void gotoxy(int x, int y) {
     /* Kursor untuk menunjuk pada titik (x,y) tertentu */
@@ -17,8 +44,6 @@ void gotoxy(int x, int y) {
 }
 
 void registrasi(Queue *Q){
-	//catatan reg : mau dibikin 2 modul? atau gimana? biar gotoxynya jalan. Trus klo misalnya total dijadiin struct gimana?
-	//cara masukin enum, data penyakitnya gimana?
 	infotype data;
 	char buffer[30] = {};
 	int i=0,total;
@@ -36,11 +61,22 @@ void registrasi(Queue *Q){
 	gotoxy(26,4);scanf("%s", buffer);fflush(stdin);
 	gotoxy(26,5);scanf("%d", &total);fflush(stdin);
 
-	data.nama = malloc(strlen(buffer));
-	strcpy(data.nama, buffer);
-	nextReg(&data, total);
-	determinePriorityAndServiceTime(&data, data.penyakit.First);
-	EnqueueNewPatient(Q, data);
+	if(total < 1 || total > 9) {
+        system("color F4");
+        gotoxy(12,21);
+        printf("Total disease has minimun of 1 and maximun of 9 !");
+        getch();
+        system("cls");
+        system("color F0");
+        registrasi(Q);
+	} else {
+	    data.nama = malloc(strlen(buffer));
+        strcpy(data.nama, buffer);
+        nextReg(&data, total);
+        determinePriorityAndServiceTime(&data, data.penyakit.First);
+        EnqueueNewPatient(Q, data);
+        main();
+	}
 }
 
 void determinePriorityAndServiceTime(infotype *data, address_linked_list first){
@@ -85,8 +121,6 @@ void determinePriorityAndServiceTime(infotype *data, address_linked_list first){
 }
 
 void nextReg(infotype *data, int total){
-	//kalau salah mending gimana?
-	//1. Kasih peringatan klo salah masukin hrus dri awal lgi
 	LinkedList_Disease daftarPenyakit;
 	infotype_disease penyakit;
 	int pilihan,i;
@@ -109,9 +143,18 @@ void nextReg(infotype *data, int total){
     	printf("|| 8. Jaundice              (B)                                ||\n");
     	printf("|| 9. Virus                 (B)                                ||\n");
 		printf("||                                                             ||\n");
-		printf("|| Input your choice:                                          ||\n");
+		printf("|| Input disease %d :                                           ||\n", i + 1);
 		printf("=================================================================\n");
-		gotoxy(22,13);scanf("%d", &pilihan);fflush(stdin);
+		gotoxy(25,13);scanf("%d", &pilihan);fflush(stdin);
+
+		if(CheckIfDiseaseAlreadyExist(daftarPenyakit.First, pilihan-1)){
+            system("color F4");
+            gotoxy(12,15);
+            printf("You have already input that disease !");
+            getch();
+            system("cls");
+            continue;
+		}
 
 		penyakit.disease_name = pilihan-1;
 
@@ -120,18 +163,21 @@ void nextReg(infotype *data, int total){
             case 2 :
             case 3 :
                 penyakit.severity = MILD;
+                InsertNewDiseaseAtEnd(&daftarPenyakit, penyakit);
                 i++;
 				break;
             case 4 :
             case 5 :
             case 6 :
                 penyakit.severity = MODERATE;
+                InsertNewDiseaseAtEnd(&daftarPenyakit, penyakit);
                 i++;
 				break;
             case 7 :
             case 8 :
             case 9 :
                 penyakit.severity = SEVERE;
+                InsertNewDiseaseAtEnd(&daftarPenyakit, penyakit);
                 i++;
                 break;
             default :
@@ -143,7 +189,6 @@ void nextReg(infotype *data, int total){
                 system("cls");
 			break;
 		}
-		InsertNewDiseaseAtEnd(&daftarPenyakit, penyakit);
 	}while(i != total);
 	data->penyakit = daftarPenyakit;
 }
@@ -206,7 +251,7 @@ void call(Queue *Q){
     		case 1:
     			system("cls");
 				system("color F0");
-				registrasi(&antrian);
+				registrasi(Q);
     			break;
     		case 2:
     			main();
@@ -219,8 +264,8 @@ void call(Queue *Q){
     		}
 		}while(pil != "1" || pil != "2");
 	}
-	
-	
+
+
 	else{
 		antrian = Q->Front;
 		next = antrian->next;
@@ -286,6 +331,7 @@ int main()
 			getch();
 			break;
 		case 4 :
+			exit(0);
 			break;
 		default :
 			//SetConsoleTextAttribute(GetStdHandle (STD_OUTPUT_HANDLE),12);

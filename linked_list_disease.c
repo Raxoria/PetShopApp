@@ -112,3 +112,13 @@ void DestructDiseaseList(address_linked_list first){
 
     DeallocDiseaseNode(first);
 }
+
+bool CheckIfDiseaseAlreadyExist(address_linked_list first, enum disease data) {
+    if(first == NULL)
+        return false;
+
+    if(first->data_disease.disease_name == data)
+        return true;
+
+    CheckIfDiseaseAlreadyExist(first->next, data);
+}
