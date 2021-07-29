@@ -28,6 +28,9 @@ address_queue AllocNewPatientNode(infotype data) {
 * @finalState   : node dibebaskan dan dikembalikan ke sistem
 */
 void DeallocPatientNode(address_queue node) {
+    free(node->data.nama);
+    DestructDiseaseList(node->data.penyakit.First);
+    node->data.penyakit.First = NULL;
     free(node);
 }
 
@@ -52,7 +55,7 @@ void EnqueueNewPatient(Queue *Q, infotype data){
         return;
 
     if(IsQueueEmpty(*Q)){
-        newPatient->data.waktu_estimasi_mulai = 1;
+        newPatient->data.waktu_estimasi_mulai = data.waktu_datang + 1;
         newPatient->data.waktu_selesai = newPatient->data.waktu_estimasi_mulai + newPatient->data.waktu_pelayaan;
 
         Q->Front = newPatient;
@@ -108,9 +111,29 @@ void EnqueueWithPriority(Queue *Q, address_queue newNode){
 
 /*
 * @initialState : Q mungkin kosong
-* @finalState   : Q->Front menunjuk ke antrian selanjutnya atau menjadi NILL, Q->Front sebelumya di Dealokasi
+* @finalState   : Q->Front menunjuk ke antrian selanjutnya atau menjadi NULL, Q->Front sebelumya di Dealokasi
 */
-void DequeuePatient(Queue *Q);
+void DequeuePatient(Queue *Q){
+	address_queue P;
+
+	if(IsQueueEmpty(*Q)){
+		printf("Queue is empty!\n");
+	}
+
+	else{
+        P = Q->Front;
+
+        if(P == Q->Rear){
+            Q->Front = NULL;
+            Q->Rear = NULL;
+        } else {
+            Q->Front = P->next;
+        }
+
+        P->next = NULL;
+        DeallocPatientNode(P);
+	}
+}
 
 /*
 * description  : Mencetak data data di dalam antrian ke layar
@@ -118,9 +141,46 @@ void DequeuePatient(Queue *Q);
 void PrintQueue(Queue Q) {
     address_queue current = Q.Front;
 
-    printf("%-20s | prioritas | waktu kedatangan | estimasi mulai | waktu pelayanan | waktu selesai |\n", "Nama");
     while(current != NULL) {
-        printf("%-20s | %-9d | %-16d | %-14d | %-15d | %-13d |\n", current->data.nama, current->data.priority, current->data.waktu_datang, current->data.waktu_estimasi_mulai, current->data.waktu_pelayaan, current->data.waktu_selesai);
-        current = current->next;
-    }
+    	infotype temp = current->data;
+    	address_linked_list curr_link = temp.penyakit.First;
+
+    printf("||                                                                                   ||\n");
+    printf("|| Time of Arrival	: %-16d                                           ||\n", temp.waktu_datang);
+    printf("|| Name			: %-20s                                       ||\n", temp.nama);
+	printf("|| \xDA\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC2\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xBF||\n");
+	printf("|| \xB3    Category Disease    \xB3                       Disease                         \xB3||\n");
+	printf("|| \xC3\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC5\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xB4||\n");
+    	while(curr_link != NULL) {
+            char* severityString = GetSeverityString(curr_link->data_disease.severity);
+            printf("|| \xB3 %-8s               \xB3 %-54s\xB3||\n", severityString, disease_string[curr_link->data_disease.disease_name]);
+            curr_link = curr_link->next;
+    	}
+    	printf("|| \xC0\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC1\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xD9||\n");
+    printf("|| Time of Service	: %-15d                                            ||\n", temp.waktu_pelayaan);
+    printf("|| Start of Service	: %-14d                                             ||\n", temp.waktu_estimasi_mulai);
+    printf("|| End of Service	: %-13d    	                                     ||\n", temp.waktu_selesai);
+    printf("||                                                                                   ||\n");
+    printf("|| Enter to Main Menu                                                                ||\n");
+	printf("=======================================================================================\n");
+
+	current = current->next;
+	}
 }
+
+char* GetSeverityString(int severity) {
+    switch(severity) {
+        case 1 :
+            return "Mild";
+            break;
+        case 2 :
+            return "Moderate";
+            break;
+        case 3 :
+            return "Severe";
+            break;
+    }
+
+    return "";
+}
+

@@ -4,6 +4,9 @@
 #include <stdbool.h>
 
 extern const char* disease_string[];
+extern const int SEVERE;
+extern const int MODERATE;
+extern const int MILD;
 
 enum disease {
     KULIT,
@@ -71,5 +74,9 @@ void InsertNewDiseaseAtStart(LinkedList_Disease *List, infotype_disease data);
 * @finalState   : Node baru ditambahkan di akhir List
 */
 void InsertNewDiseaseAtEnd(LinkedList_Disease *List, infotype_disease data);
+
+void DestructDiseaseList(address_linked_list first);
+
+bool CheckIfDiseaseAlreadyExist(address_linked_list first, enum disease data);
 
 #endif // linked_list_disease
