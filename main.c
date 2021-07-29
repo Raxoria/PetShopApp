@@ -149,7 +149,7 @@ void nextReg(infotype *data, int total){
 
 		if(CheckIfDiseaseAlreadyExist(daftarPenyakit.First, pilihan-1)){
             system("color F4");
-            gotoxy(12,21);
+            gotoxy(12,15);
             printf("You have already input that disease !");
             getch();
             system("cls");
