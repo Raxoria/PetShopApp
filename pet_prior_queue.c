@@ -161,11 +161,10 @@ void PrintQueue(Queue Q) {
     printf("|| Start of Service	: %-14d                                             ||\n", temp.waktu_estimasi_mulai);
     printf("|| End of Service	: %-13d    	                                     ||\n", temp.waktu_selesai);
     printf("||                                                                                   ||\n");
-    printf("|| Enter to Main Menu                                                                ||\n");
-	printf("=======================================================================================\n");
-
+    printf("=======================================================================================\n");
 	current = current->next;
-	}
+	}    printf("   Enter to Main Menu                                                                  \n");
+	//printf("=======================================================================================\n");
 }
 
 char* GetSeverityString(int severity) {
