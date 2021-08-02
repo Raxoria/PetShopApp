@@ -8,34 +8,12 @@
 #include <time.h>
 
 Queue antrian;
-/* int bg, fg, delay, panjang;
-int simbol[20] = {2,3,4,5,6,14,16,22,35,36,62,64,158,174,175,176,177,178,219};
-
-void loading(int bg, int fg, int panjang, int delay, int simbol[20])
-{
- int k, l;
-	system("color F0");
-   for (k=0; k<=panjang; k++)
-   {
-      //system("cls");  //digunakan untuk membersihkan layar pada compiler C, hampir sama dengan fungsi clrscr()
-      gotoxy(55,1);printf("\n\tLOADING (PLEASE WAIT)\n\t");
-      kecepatan(0.001);
-	  for (l=0; l<k; l++)
-       printf("%c", simbol[fg]);
-      for (l=0; l<panjang-1; l++)
-       printf("%c", simbol[bg]);
-      Sleep(delay);
-   }
-}
-
-void kecepatan(float seconds){
-	clock_t endwait;
-	endwait=clock()+seconds*CLOCKS_PER_SEC;
-	while(clock()<endwait){};
-}*/
 
 void gotoxy(int x, int y) {
-    /* Kursor untuk menunjuk pada titik (x,y) tertentu */
+    /* Kursor untuk menunjuk pada titik (x,y) tertentu 
+	* @author : Internet (edited)
+	* @deskription : digunakan untuk menunjukan tempat kursor
+	*/
 
       COORD coord;
       coord.X = x;
@@ -44,6 +22,10 @@ void gotoxy(int x, int y) {
 }
 
 void registrasi(Queue *Q){
+	/* 
+	* @author : Syelvie Ira Ratna Mulia
+	* @deskription : modul pengisian data(nama, waktu datang dan total penyakit) yang dibutuhkan registrasi
+	*/
 	infotype data;
 	char buffer[30] = {};
 	int i=0,total;
@@ -80,7 +62,11 @@ void registrasi(Queue *Q){
 }
 
 void determinePriorityAndServiceTime(infotype *data, address_linked_list first){
-
+	/* 
+	* @author : Reihan Reinaldi Suryaman
+	* @deskription : Memberikan nilai prioritas dan memproses waktu pelayanan
+	*/
+	
     int severeCount, moderateCount, mildCount, totalTime;
     severeCount = moderateCount = mildCount = totalTime = 0;
 
@@ -121,6 +107,10 @@ void determinePriorityAndServiceTime(infotype *data, address_linked_list first){
 }
 
 void nextReg(infotype *data, int total){
+	/* 
+	* @author : Syelvie Ira Ratna Mulia
+	* @deskription : modul pengisian data (jenis jenis penyakit) yang dibutuhkan registrasi
+	*/
 	LinkedList_Disease daftarPenyakit;
 	infotype_disease penyakit;
 	int pilihan,i;
@@ -183,7 +173,7 @@ void nextReg(infotype *data, int total){
             default :
                 //SetConsoleTextAttribute(GetStdHandle (STD_OUTPUT_HANDLE),12);
                 system("color F4");
-                gotoxy(12,21);
+                gotoxy(12,15);
                 printf("Please choose the option on the menu!");
                 getch();
                 system("cls");
@@ -194,6 +184,10 @@ void nextReg(infotype *data, int total){
 }
 
 void list(Queue Q){
+	/* 
+	* @author : Syelvie Ira Ratna Mulia
+	* @deskription : Menampilkan list antrian
+	*/
 	int pil;
 	system("color F0");
 	printf("=============================== ROC'S VETERINARY CLINIC ===============================\n");
@@ -230,6 +224,11 @@ void list(Queue Q){
 }
 
 void call(Queue *Q){
+	/* 
+	* @author : Syelvie Ira Ratna Mulia
+	* @deskription : modul yang menampilkan pemanggilan kucing yang dipanggil
+	*/
+	
 	address_queue antrian,next;
 	int pil;
 
@@ -292,6 +291,11 @@ void call(Queue *Q){
 
 int main()
 {
+	/* 
+	* @author : Syelvie Ira Ratna Mulia
+	* @deskription : modul main menu
+	*/
+	
 	system("cls");
 	int pilihan;
 	if(IsQueueEmpty(antrian)){

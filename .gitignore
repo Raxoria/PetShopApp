@@ -4,6 +4,10 @@
 #But not these
 !main.c
 !pet_prior_queue.c
+<<<<<<< Updated upstream
 !pet_prior_queue.h
 !linked_list_disease.c
 !linked_list_disease.h
+=======
+!pet_prior_queue.h
+>>>>>>> Stashed changes
