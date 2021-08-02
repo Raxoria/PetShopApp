@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 /*
+* @author : Reihan Reinaldi Suryaman
 * @description  : Mengembalikan nilai true jika Q kosong
 */
 bool IsQueueEmpty(Queue Q) {
@@ -10,6 +11,7 @@ bool IsQueueEmpty(Queue Q) {
 }
 
 /*
+* @author : Reihan Reinaldi Suryaman
 * @description  : Mengirimkan address hasil alokasi satu node, return NULL jika alokasi gagal
 */
 address_queue AllocNewPatientNode(infotype data) {
@@ -35,6 +37,7 @@ void DeallocPatientNode(address_queue node) {
 }
 
 /*
+* @author : Reihan Reinaldi Suryaman
 * @initialState : Q sembarang
 * @finalState   : Terbentuk Q kosong, Q=>Front = NULL dan Q->Rear == NULL
 */
@@ -44,6 +47,7 @@ void CreateNewQueue(Queue *Q){
 }
 
 /*
+* @author : Reihan Reinaldi Suryaman
 * @initialState : Q mungkin kosong
 * @finalState   : Node baru teralokasi dan ditambahkan ke Q di posisi yang sesuai dengan urutan prioritasnya
 */
@@ -70,6 +74,10 @@ void EnqueueNewPatient(Queue *Q, infotype data){
     }
 }
 
+/*
+* @author : Reihan Reinaldi Suryaman
+& @description: Menambah data antrian di akhir
+*/
 void EnqueueAtEnd(Queue *Q, address_queue newNode){
     newNode->data.waktu_estimasi_mulai = Q->Rear->data.waktu_selesai + 1;
     newNode->data.waktu_selesai = newNode->data.waktu_estimasi_mulai + newNode->data.waktu_pelayaan;
@@ -78,6 +86,10 @@ void EnqueueAtEnd(Queue *Q, address_queue newNode){
     Q->Rear = newNode;
 }
 
+/*
+* @author : Reihan Reinaldi Suryaman
+& @description: Menambah data antrian sesuai prioritas
+*/
 void EnqueueWithPriority(Queue *Q, address_queue newNode){
     address_queue current = Q->Front->next;
     address_queue prev = Q->Front;
@@ -89,6 +101,7 @@ void EnqueueWithPriority(Queue *Q, address_queue newNode){
             continue;
         }
 
+        //melengkapi data pasien
         newNode->next = prev->next;
         newNode->data.waktu_estimasi_mulai = prev->data.waktu_selesai + 1;
         newNode->data.waktu_selesai = newNode->data.waktu_estimasi_mulai + newNode->data.waktu_pelayaan;
@@ -97,6 +110,7 @@ void EnqueueWithPriority(Queue *Q, address_queue newNode){
         address_queue currentEdit = newNode->next;
         address_queue prevEdit = newNode;
 
+        //memperbaharui data di bawah
         while(currentEdit != NULL) {
             currentEdit->data.waktu_estimasi_mulai = prevEdit->data.waktu_selesai + 1;
             currentEdit->data.waktu_selesai = currentEdit->data.waktu_estimasi_mulai + currentEdit->data.waktu_pelayaan;
@@ -110,6 +124,7 @@ void EnqueueWithPriority(Queue *Q, address_queue newNode){
 }
 
 /*
+* @author : Khansa Rafifah Taqiyyah
 * @initialState : Q mungkin kosong
 * @finalState   : Q->Front menunjuk ke antrian selanjutnya atau menjadi NULL, Q->Front sebelumya di Dealokasi
 */
@@ -136,6 +151,7 @@ void DequeuePatient(Queue *Q){
 }
 
 /*
+* @author : Khansa Rafifah Taqiyyah
 * description  : Mencetak data data di dalam antrian ke layar
 */
 void PrintQueue(Queue Q) {
@@ -170,6 +186,10 @@ void PrintQueue(Queue Q) {
 	printf("   Enter to Main Menu                                                                  \n");
 }
 
+/*
+* @author : Reihan Reinaldi Suryaman
+* description  : Mendapatkan string severity
+*/
 char* GetSeverityString(int severity) {
     switch(severity) {
         case 1 :
