@@ -17,32 +17,12 @@ void determinePriorityAndServiceTime(infotype *data, infotype_disease disease[9]
 * @author : Internet (edited)
 * @description : digunakan untuk menunjukan tempat kursor
 */
-void gotoxy(int x, int y) {
-    COORD coord;
-    coord.X = x;
-    coord.Y = y;
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
-}
+void gotoxy(int x, int y);
 
 /*
 * @author : Reihan Reinaldi Suryaman
 * description  : Mendapatkan string severity
 */
-char* GetSeverityString(int severity) {
-
-    switch(severity) {
-        case 1 :
-            return "Mild";
-            break;
-        case 2 :
-            return "Moderate";
-            break;
-        case 3 :
-            return "Severe";
-            break;
-    }
-
-    return "";
-}
+char* GetSeverityString(int severity);
 
 #endif // util_H
