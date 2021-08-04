@@ -1,28 +1,13 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include "linked_list_disease.h"
-#include "pet_prior_queue.h"
 #include <string.h>
-#include <conio.h>
-#include <windows.h>
-#include <time.h>
+
+#include "disease.h"
+#include "pet_prior_queue.h"
 
 Queue antrian;
 
-void gotoxy(int x, int y) {
-    /* Kursor untuk menunjuk pada titik (x,y) tertentu 
-	* @author : Internet (edited)
-	* @deskription : digunakan untuk menunjukan tempat kursor
-	*/
-
-      COORD coord;
-      coord.X = x;
-      coord.Y = y;
-      SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
-}
-
 void registrasi(Queue *Q){
-	/* 
+	/*
 	* @author : Syelvie Ira Ratna Mulia
 	* @deskription : modul pengisian data(nama, waktu datang dan total penyakit) yang dibutuhkan registrasi
 	*/
@@ -53,69 +38,23 @@ void registrasi(Queue *Q){
         registrasi(Q);
 	} else {
 	    data.nama = malloc(strlen(buffer));
+	    data.totalDisease = total;
         strcpy(data.nama, buffer);
-        nextReg(&data, total);
-        determinePriorityAndServiceTime(&data, data.penyakit.First);
+        nextReg(&data);
+        determinePriorityAndServiceTime(&data, data.penyakit);
         EnqueueNewPatient(Q, data);
         main();
 	}
 }
 
-void determinePriorityAndServiceTime(infotype *data, address_linked_list first){
-	/* 
-	* @author : Reihan Reinaldi Suryaman
-	* @deskription : Memberikan nilai prioritas dan memproses waktu pelayanan
-	*/
-	
-    int severeCount, moderateCount, mildCount, totalTime;
-    severeCount = moderateCount = mildCount = totalTime = 0;
-
-    data->priority = 1;
-    data->waktu_pelayaan = 0;
-
-    while(first != NULL) {
-        int severity = first->data_disease.severity;
-        if(severity == MILD) {
-            mildCount++;
-            totalTime+=15;
-        } else if(severity == MODERATE) {
-            moderateCount++;
-            totalTime+=30;
-        } else if(severity == SEVERE) {
-            severeCount++;
-            totalTime+=45;
-        }
-
-        first = first->next;
-    }
-
-    (data->priority) += severeCount * 4;
-
-    if(moderateCount >= 2) {
-        (data->priority) += 3;
-    } else if (moderateCount > 0) {
-        (data->priority)++;
-    }
-
-    if(mildCount >= 3) {
-        (data->priority) += 2;
-    } else if (mildCount > 0) {
-        (data->priority)++;
-    }
-
-    data->waktu_pelayaan = totalTime;
-}
-
-void nextReg(infotype *data, int total){
-	/* 
+void nextReg(infotype *data){
+	/*
 	* @author : Syelvie Ira Ratna Mulia
 	* @deskription : modul pengisian data (jenis jenis penyakit) yang dibutuhkan registrasi
 	*/
-	LinkedList_Disease daftarPenyakit;
+	memset(data->penyakit, -1, sizeof(infotype_disease) * 9);
 	infotype_disease penyakit;
-	int pilihan,i;
-
-	CreateNewDiseaseList(&daftarPenyakit);
+	int pilihan, i = 0;
 
 	do{
 		system("cls");
@@ -137,7 +76,7 @@ void nextReg(infotype *data, int total){
 		printf("=================================================================\n");
 		gotoxy(25,13);scanf("%d", &pilihan);fflush(stdin);
 
-		if(CheckIfDiseaseAlreadyExist(daftarPenyakit.First, pilihan-1)){
+		if(CheckIfDiseaseAlreadyExist(data->penyakit, data->totalDisease, pilihan - 1)){
             system("color F4");
             gotoxy(12,15);
             printf("You have already input that disease !");
@@ -153,21 +92,21 @@ void nextReg(infotype *data, int total){
             case 2 :
             case 3 :
                 penyakit.severity = MILD;
-                InsertNewDiseaseAtEnd(&daftarPenyakit, penyakit);
+                data->penyakit[i] = penyakit;
                 i++;
 				break;
             case 4 :
             case 5 :
             case 6 :
                 penyakit.severity = MODERATE;
-                InsertNewDiseaseAtEnd(&daftarPenyakit, penyakit);
+                data->penyakit[i] = penyakit;
                 i++;
 				break;
             case 7 :
             case 8 :
             case 9 :
                 penyakit.severity = SEVERE;
-                InsertNewDiseaseAtEnd(&daftarPenyakit, penyakit);
+                data->penyakit[i] = penyakit;
                 i++;
                 break;
             default :
@@ -179,12 +118,11 @@ void nextReg(infotype *data, int total){
                 system("cls");
 			break;
 		}
-	}while(i != total);
-	data->penyakit = daftarPenyakit;
+	} while(i < data->totalDisease);
 }
 
 void list(Queue Q){
-	/* 
+	/*
 	* @author : Syelvie Ira Ratna Mulia
 	* @deskription : Menampilkan list antrian
 	*/
@@ -224,11 +162,11 @@ void list(Queue Q){
 }
 
 void call(Queue *Q){
-	/* 
+	/*
 	* @author : Syelvie Ira Ratna Mulia
 	* @deskription : modul yang menampilkan pemanggilan kucing yang dipanggil
 	*/
-	
+
 	address_queue antrian,next;
 	int pil;
 
@@ -285,17 +223,16 @@ void call(Queue *Q){
     	}
     	printf("|| Enter to Main Menu                                          ||\n");
     	printf("=================================================================\n");
-    DequeuePatient(Q);
+        DequeuePatient(Q);
 	}
 }
 
-int main()
-{
-	/* 
+int main(){
+	/*
 	* @author : Syelvie Ira Ratna Mulia
 	* @deskription : modul main menu
 	*/
-	
+
 	system("cls");
 	int pilihan;
 	if(IsQueueEmpty(antrian)){

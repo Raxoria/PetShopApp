@@ -1,8 +1,9 @@
 #ifndef pet_prior_queue.h
 #define pet_prior_queue.h
 
-#include "linked_list_disease.h"
 #include <stdbool.h>
+
+#include "disease.h"
 
 typedef struct NodeQueue* address_queue;
 
@@ -13,7 +14,8 @@ typedef struct {
     int waktu_estimasi_mulai;
     int waktu_selesai;
     int priority;
-    LinkedList_Disease penyakit;
+    int totalDisease;
+    infotype_disease penyakit[9];
 } infotype;
 
 typedef struct NodeQueue {
@@ -68,7 +70,5 @@ void DequeuePatient(Queue *Q);
 * description  : Mencetak data data di dalam antrian ke layar
 */
 void PrintQueue(Queue Q);
-
-char* GetSeverityString(int severity);
 
 #endif // pet_prior_queue

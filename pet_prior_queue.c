@@ -31,8 +31,6 @@ address_queue AllocNewPatientNode(infotype data) {
 */
 void DeallocPatientNode(address_queue node) {
     free(node->data.nama);
-    DestructDiseaseList(node->data.penyakit.First);
-    node->data.penyakit.First = NULL;
     free(node);
 }
 
@@ -160,12 +158,10 @@ void PrintQueue(Queue Q) {
 
     while(current != NULL) {
         infotype temp = current->data;
-    	address_linked_list curr_link = temp.penyakit.First;
-	int j = 1;
-		
-    	if(i == 1){
-  		printf("||                                                                                   ||\n");
-  		printf("=======================================================================================\n");
+
+        if(i == 1) {
+            printf("||                                                                                   ||\n");
+            printf("=======================================================================================\n");
 	        printf("||                               PERSIAPAN DIPERIKSA                                 ||\n");
 	        printf("=======================================================================================\n");
 	        printf("||                                                                                   ||\n");
@@ -175,12 +171,13 @@ void PrintQueue(Queue Q) {
 	        printf("|| \xDA\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC2\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xBF||\n");
 	        printf("|| \xB3    Category Disease    \xB3                       Disease                         \xB3||\n");
 	        printf("|| \xC3\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC5\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xB4||\n");
-	    	while(curr_link != NULL) {
-	            char* severityString = GetSeverityString(curr_link->data_disease.severity);
-	            printf("|| \xB3 %-d. %-8s            \xB3 %-54s\xB3||\n", j, severityString, disease_string[curr_link->data_disease.disease_name]);
-	            curr_link = curr_link->next;
-		    j++;
+
+	    	int index;
+	    	for(index = 0; index < temp.totalDisease; index++ ) {
+	            char* severityString = GetSeverityString(temp.penyakit[index].severity);
+	            printf("|| \xB3 %-d. %-8s            \xB3 %-54s\xB3||\n", index + 1, severityString, disease_string[temp.penyakit[index].disease_name]);
 	    	}
+
 	    	printf("|| \xC0\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC1\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xD9||\n");
 	        printf("|| Time of Service	: %-15d                                            ||\n", temp.waktu_pelayaan);
 	        printf("|| Start of Service	: %-14d                                             ||\n", temp.waktu_estimasi_mulai);
@@ -188,53 +185,34 @@ void PrintQueue(Queue Q) {
 	        printf("||                                                                                   ||\n");
 	        printf("=======================================================================================\n");
 	        printf("||                              RUANG TUNGGU ANTRIAN                                 ||\n");
-		printf("=======================================================================================\n");
+            printf("=======================================================================================\n");
 	        current = current->next;
 	        i++;
-	}
-	else{
-		printf("||                                                                                   ||\n");
-		printf("|| Queue Number	        : %-16d                                           ||\n", i);
-		printf("|| Time of Arrival	: %-16d                                           ||\n", temp.waktu_datang);
-	        printf("|| Name			: %-20s                                       ||\n", temp.nama);
-	        printf("|| \xDA\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC2\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xBF||\n");
-	        printf("|| \xB3    Category Disease    \xB3                       Disease                         \xB3||\n");
-		printf("|| \xC3\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC5\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xB4||\n");
-		while(curr_link != NULL) {
-		     char* severityString = GetSeverityString(curr_link->data_disease.severity);
-		     printf("|| \xB3 %-d. %-8s            \xB3 %-54s\xB3||\n", j, severityString, disease_string[curr_link->data_disease.disease_name]);
-		     curr_link = curr_link->next;
-		     j++;
+        }
+	else {
+            printf("||                                                                                   ||\n");
+            printf("|| Queue Number	        : %-16d                                           ||\n", i);
+            printf("|| Time of Arrival	: %-16d                                           ||\n", temp.waktu_datang);
+            printf("|| Name			: %-20s                                       ||\n", temp.nama);
+            printf("|| \xDA\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC2\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xBF||\n");
+            printf("|| \xB3    Category Disease    \xB3                       Disease                         \xB3||\n");
+            printf("|| \xC3\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC5\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xB4||\n");
+
+	    	int index;
+	    	for(index = 0; index < temp.totalDisease; index++ ) {
+	            char* severityString = GetSeverityString(temp.penyakit[index].severity);
+	            printf("|| \xB3 %-d. %-8s            \xB3 %-54s\xB3||\n", index + 1, severityString, disease_string[temp.penyakit[index].disease_name]);
 	    	}
-		printf("|| \xC0\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC1\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xD9||\n");
-	 	printf("|| Time of Service	: %-15d                                            ||\n", temp.waktu_pelayaan);
-		printf("|| Start of Service	: %-14d                                             ||\n", temp.waktu_estimasi_mulai);
-		printf("|| End of Service	: %-13d    	                                     ||\n", temp.waktu_selesai);
-		printf("||                                                                                   ||\n");
-		printf("=======================================================================================\n");
-		current = current->next;
-		i++;  
-	}	
-   }	
-	printf("   Enter to Main Menu                                                                  \n");
-}
 
-/*
-* @author : Reihan Reinaldi Suryaman
-* description  : Mendapatkan string severity
-*/
-char* GetSeverityString(int severity) {
-    switch(severity) {
-        case 1 :
-            return "Mild";
-            break;
-        case 2 :
-            return "Moderate";
-            break;
-        case 3 :
-            return "Severe";
-            break;
-    }
-
-    return "";
+            printf("|| \xC0\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC1\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xD9||\n");
+            printf("|| Time of Service	: %-15d                                            ||\n", temp.waktu_pelayaan);
+            printf("|| Start of Service	: %-14d                                             ||\n", temp.waktu_estimasi_mulai);
+            printf("|| End of Service	: %-13d    	                                     ||\n", temp.waktu_selesai);
+            printf("||                                                                                   ||\n");
+            printf("=======================================================================================\n");
+            current = current->next;
+            i++;
+        }
+   }
+   printf("   Enter to Main Menu                                                                  \n");
 }
